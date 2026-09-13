@@ -108,13 +108,17 @@
             </div>
             <div class="field">
                 <label>Order Items</label>
-                <textarea name="order_items" rows="2">
-2x Product A, 1x Product B</textarea
-                >
+                <div id="product-selector">
+                    <div style="margin-bottom: 8px;">
+                        <button type="button" id="add-product-btn" style="background: #007bff;">+ Add Product</button>
+                    </div>
+                    <div id="product-items"></div>
+                </div>
+                <input type="hidden" name="order_items" id="order-items-hidden" />
             </div>
             <div class="field">
                 <label>Order Total (NGN)</label>
-                <input type="number" name="order_total" value="5000" />
+                <input type="number" name="order_total" id="order-total" value="0" readonly />
             </div>
             <button type="submit">Submit via track.js</button>
             <button type="button" id="manual-btn">Submit Direct</button>
@@ -1106,6 +1110,101 @@
                     ],
                 },
             ];
+            const vendorProducts = [
+                {
+                    id: "8c0f8001-ec38-4cea-838b-1ff345863e60",
+                    product_name: "Adjustable Dumbbells",
+                    price: 50000,
+                    variants: [
+                        { id: "75de62a4-0474-46fe-9980-dda16f84ff88", variant_name: "20kg" },
+                        { id: "d4a8ffbc-c022-41f8-93b1-608f5fd56ae5", variant_name: "30kg" },
+                        { id: "929bbae1-89ca-474f-a851-6a75c2a94594", variant_name: "50kg" }
+                    ]
+                },
+                {
+                    id: "70d87319-4873-434b-9b83-8a8417273e16",
+                    product_name: "Classic T-Shirt",
+                    price: 5500,
+                    variants: [
+                        { id: "4ae7bca0-36db-4cd0-8188-143b8e25986c", variant_name: "M/Red" },
+                        { id: "537ec5a3-e585-4f5a-bd99-5252d44948d3", variant_name: "M/Black" },
+                        { id: "2c920233-f5b3-473d-a30e-2d48ae97869e", variant_name: "L/Red" },
+                        { id: "9aa0b785-ec75-4b3c-8ac9-e9a0db56eac2", variant_name: "L/Black" }
+                    ]
+                },
+                {
+                    id: "5d7db846-d7c8-49d6-be9e-0df0a9768876",
+                    product_name: "Fitness Tracker X",
+                    price: 32000,
+                    variants: []
+                },
+                {
+                    id: "f59d4fb7-12c3-44a5-9d1c-2fd1ace146dc",
+                    product_name: "Gym shoes",
+                    price: 25000,
+                    variants: [
+                        { id: "9e8071e0-4ac4-4a9b-be07-230e0df6f248", variant_name: "Pink/43" },
+                        { id: "6751c173-7ad6-4e20-a576-5e77ac26e322", variant_name: "Pink/44" },
+                        { id: "43b72ace-b18f-4a86-a92c-4fecf3bd0dc4", variant_name: "Pink/45" },
+                        { id: "9564255f-b395-4b81-b04f-2f5cef397d3c", variant_name: "White/43" },
+                        { id: "0ada056e-8f1e-42cf-b2cf-563a4d081c8e", variant_name: "White/44" },
+                        { id: "cf23ba6f-22f1-4f73-9f30-9a33d1a4b70c", variant_name: "White/45" },
+                        { id: "b7c9322b-2a85-4700-a4b1-4db8ae4f1405", variant_name: "Black/43" },
+                        { id: "74c73cb3-3cfa-4fc6-8dc4-5609b23d06d3", variant_name: "Black/44" },
+                        { id: "1dc17d77-c114-4eca-bdb1-3165d2857aad", variant_name: "Black/45" }
+                    ]
+                },
+                {
+                    id: "e81379b0-cbaa-4ee5-92bb-2cb7d4edc8ee",
+                    product_name: "Kettle bell",
+                    price: 10000,
+                    variants: [
+                        { id: "9ac9abb3-8c8c-449e-aafd-3921fa5617b3", variant_name: "20kg" },
+                        { id: "7ac31000-49d6-4f16-b09d-1b3bfcabd26d", variant_name: "30kg" },
+                        { id: "8b6979e0-cc0a-4753-bd31-d7340e890f9b", variant_name: "50kg" }
+                    ]
+                },
+                {
+                    id: "562b3ecd-8aba-44d7-ae4c-ebc0bc03c4d6",
+                    product_name: "Leather Shoes",
+                    price: 15000,
+                    variants: [
+                        { id: "81528527-1198-48cd-af22-48010a55f4e6", variant_name: "42" },
+                        { id: "0cf95a33-dae9-4fac-a8d3-795528423cea", variant_name: "45" }
+                    ]
+                },
+                {
+                    id: "25c61136-5794-4954-9298-baed1d286409",
+                    product_name: "Pre-workout",
+                    price: 55000,
+                    variants: [
+                        { id: "ab9a9216-9a10-482e-99ea-8d7d657bd0b2", variant_name: "300g" },
+                        { id: "08b30dca-4ec1-4d7f-835c-35083cd9cf0f", variant_name: "500g" }
+                    ]
+                },
+                {
+                    id: "983b0d1b-e154-4fad-a2d7-b966ed0713be",
+                    product_name: "Protein Shake Mix (1kg)",
+                    price: 22000,
+                    variants: []
+                },
+                {
+                    id: "53fbb795-a69b-4c7c-bb02-d474ff87e9cf",
+                    product_name: "Resistance Bands Set",
+                    price: 15000,
+                    variants: []
+                },
+                {
+                    id: "8043d949-babf-4de2-95fc-093c49db917a",
+                    product_name: "Workout Shirt",
+                    price: 10000,
+                    variants: [
+                        { id: "4fcf9bf3-c8fd-4edd-8f59-c349f0cd41fb", variant_name: "L" },
+                        { id: "7f459e12-b2ad-4437-b6b3-02019f0fe087", variant_name: "XL" },
+                        { id: "e99c4fcd-167c-4744-a9cf-b9a8a0c75690", variant_name: "XLL" }
+                    ]
+                }
+            ];
 
             const stateSelect = document.getElementById('state-select');
             const citySelect = document.getElementById('city-select');
@@ -1135,6 +1234,120 @@
                     citySelect.disabled = true;
                 }
             });
+
+            let productCounter = 0;
+            const productItemsContainer = document.getElementById('product-items');
+            const orderItemsHidden = document.getElementById('order-items-hidden');
+            const orderTotalInput = document.getElementById('order-total');
+
+            function createProductRow() {
+                productCounter++;
+                const rowId = `product-row-${productCounter}`;
+                const row = document.createElement('div');
+                row.id = rowId;
+                row.className = 'product-row';
+                row.style.cssText = 'display: flex; gap: 8px; margin-bottom: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: #fafafa; flex-wrap: wrap; align-items: flex-end;';
+
+                const productSelect = document.createElement('select');
+                productSelect.name = `product_${productCounter}`;
+                productSelect.required = true;
+                productSelect.style.cssText = 'flex: 1; min-width: 200px; padding: 8px;';
+                productSelect.innerHTML = '<option value="">Select product</option>';
+                vendorProducts.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.product_name} - ₦${p.price.toLocaleString()}`;
+                    opt.dataset.price = p.price;
+                    opt.dataset.variants = JSON.stringify(p.variants);
+                    productSelect.appendChild(opt);
+                });
+
+                const variantSelect = document.createElement('select');
+                variantSelect.name = `variant_${productCounter}`;
+                variantSelect.style.cssText = 'flex: 1; min-width: 150px; padding: 8px;';
+                variantSelect.innerHTML = '<option value="">Select variant (if any)</option>';
+                variantSelect.disabled = true;
+
+                const qtyInput = document.createElement('input');
+                qtyInput.type = 'number';
+                qtyInput.name = `qty_${productCounter}`;
+                qtyInput.value = 1;
+                qtyInput.min = 1;
+                qtyInput.style.cssText = 'width: 80px; padding: 8px;';
+                qtyInput.required = true;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.textContent = 'Remove';
+                removeBtn.style.cssText = 'background: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;';
+                removeBtn.onclick = () => {
+                    row.remove();
+                    updateOrderSummary();
+                };
+
+                productSelect.onchange = () => {
+                    const selectedOpt = productSelect.options[productSelect.selectedIndex];
+                    const variants = JSON.parse(selectedOpt.dataset.variants || '[]');
+                    variantSelect.innerHTML = '<option value="">Select variant (if any)</option>';
+                    if (variants.length > 0) {
+                        variants.forEach(v => {
+                            const opt = document.createElement('option');
+                            opt.value = v.id;
+                            opt.textContent = v.variant_name;
+                            variantSelect.appendChild(opt);
+                        });
+                        variantSelect.disabled = false;
+                    } else {
+                        variantSelect.disabled = true;
+                    }
+                    updateOrderSummary();
+                };
+
+                variantSelect.onchange = updateOrderSummary;
+                qtyInput.onchange = updateOrderSummary;
+                qtyInput.oninput = updateOrderSummary;
+
+                row.appendChild(productSelect);
+                row.appendChild(variantSelect);
+                row.appendChild(qtyInput);
+                row.appendChild(removeBtn);
+                productItemsContainer.appendChild(row);
+            }
+
+            function updateOrderSummary() {
+                const rows = productItemsContainer.querySelectorAll('.product-row');
+                let total = 0;
+                const items = [];
+
+                rows.forEach(row => {
+                    const productSelect = row.querySelector('select[name^="product_"]');
+                    const variantSelect = row.querySelector('select[name^="variant_"]');
+                    const qtyInput = row.querySelector('input[name^="qty_"]');
+
+                    if (productSelect.value) {
+                        const productOpt = productSelect.options[productSelect.selectedIndex];
+                        const productPrice = parseInt(productOpt.dataset.price) || 0;
+                        const qty = parseInt(qtyInput.value) || 1;
+                        const lineTotal = productPrice * qty;
+                        total += lineTotal;
+
+                        let itemStr = `${qty}x ${productOpt.textContent.split(' - ₦')[0]}`;
+                        if (variantSelect.value) {
+                            const variantOpt = variantSelect.options[variantSelect.selectedIndex];
+                            itemStr += ` (${variantOpt.textContent})`;
+                        }
+                        items.push(itemStr);
+                    }
+                });
+
+                orderTotalInput.value = total;
+                orderItemsHidden.value = items.join(', ');
+            }
+
+            document.getElementById('add-product-btn').addEventListener('click', createProductRow);
+
+            // Add initial product row
+            createProductRow();
 
             document
                 .getElementById('manual-btn')
