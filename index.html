@@ -1255,10 +1255,10 @@
                 productSelect.innerHTML = '<option value="">Select product</option>';
                 vendorProducts.forEach(p => {
                     const opt = document.createElement('option');
-                    opt.value = p.id;
+                    opt.value = p.product_name;
                     opt.textContent = `${p.product_name} - ₦${p.price.toLocaleString()}`;
                     opt.dataset.price = p.price;
-                    opt.dataset.variants = JSON.stringify(p.variants);
+                    opt.dataset.variants = JSON.stringify(p.variants.map(v => v.variant_name));
                     productSelect.appendChild(opt);
                 });
 
@@ -1292,8 +1292,8 @@
                     if (variants.length > 0) {
                         variants.forEach(v => {
                             const opt = document.createElement('option');
-                            opt.value = v.id;
-                            opt.textContent = v.variant_name;
+                            opt.value = v;
+                            opt.textContent = v;
                             variantSelect.appendChild(opt);
                         });
                         variantSelect.disabled = false;
